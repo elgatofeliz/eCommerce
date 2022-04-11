@@ -1,0 +1,39 @@
+.shopGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+.shopItem {
+    text-align: center;
+    background-color: #dedede;
+    padding: 10px;
+    border-radius: 10px;
+
+    &:hover {
+        background-color: #cdcdcd;
+    }
+
+    >a {
+        text-decoration: none;
+        color: black;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.imageWrapperThumbnail {
+    display: inline-block;
+    height: 100px;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: white;
+
+    >img {
+        height: 100%;
+    }
+}
