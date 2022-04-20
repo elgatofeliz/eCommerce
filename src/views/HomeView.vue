@@ -1,5 +1,6 @@
 <script setup>
 import ShopItem from '@/components/ShopItem.vue'
+import FilterAside from '../components/aside/FilterAside.vue'
 import { useShopDataStore } from '@/stores/shopData.js'
 import { storeToRefs } from 'pinia'
 
@@ -14,17 +15,20 @@ fetch('https://fakestoreapi.com/products')
 const { workData } = storeToRefs(shopDataStore)
 </script>
 <template>
-    <main class="homeView">
-        <section class="shopGrid">
-            <ShopItem
-                v-for="item in workData"
-                :title="item.title"
-                :image="item.image"
-                :price="item.price"
-                :id="item.id"
-            />
-        </section>
-    </main>
+    <div class="mainFlex">
+        <FilterAside />
+        <main class="homeView">
+            <section class="shopGrid">
+                <ShopItem
+                    v-for="item in workData"
+                    :title="item.title"
+                    :image="item.image"
+                    :price="item.price"
+                    :id="item.id"
+                />
+            </section>
+        </main>
+    </div>
 </template>
 <style lang="scss">
 </style>

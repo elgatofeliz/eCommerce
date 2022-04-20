@@ -26,6 +26,6 @@ const addToCart = () => {
             Price:
             <b>{{ props.price }}$</b>
         </p>
-        <button @click="addToCart">Add to Cart</button>
+        <button @click="addToCart" class="button">Add to Cart</button>
     </article>
 </template>

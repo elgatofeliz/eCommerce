@@ -1,15 +1,12 @@
 <script setup>
 import { RouterView } from 'vue-router';
 import Header from '@/components/header/HeaderItem.vue'
-import AsideItem from './components/aside/AsideItem.vue'
+import AsideItem from './components/aside/FilterAside.vue'
 </script>
 
 <template>
   <Header />
-  <section class="mainFlex">
-    <AsideItem />
-    <RouterView />
-  </section>
+  <RouterView />
 </template>
 
 <style lang="scss">
