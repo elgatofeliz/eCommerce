@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import InputCheckbox from '@/components/input/inputCheckbox.vue'
 import InputRange from '../input/inputRange.vue';
 import { storeToRefs } from 'pinia';
