@@ -5,10 +5,18 @@ export const useShopCartStore = defineStore('cartStore', {
 
     state: () => ({
         cartData: [],
-        cartQuantity: ""
+        cartQuantity: 0
     }),
 
     actions: {
+
+        quantity() {
+            let quantity = 0
+            this.cartData.products.forEach(item => {
+                quantity += item.qty
+            })
+            console.log(quantity)
+        },
 
         loadCartInstance() {
             const cs = localStorage.getItem('cart')
@@ -58,8 +66,16 @@ export const useShopCartStore = defineStore('cartStore', {
                 //update cartData state
                 this.cartData = cartLocalStorage
             }
+
             // update data in localStorage
             localStorage.setItem('cart', JSON.stringify(this.cartData))
+
+            //update cartQuantity
+            let quantity = 0
+            this.cartData.products.forEach(item => {
+                quantity += item.qty
+            })
+            this.cartQuantity = quantity
         },
 
         removeFromCart(id) {

@@ -30,6 +30,10 @@ const addToCart = () => {
     shopCartStore.addToCart(product)
 }
 
+const quantityCheck = () => {
+    shopCartStore.quantity()
+}
+
 </script>
 <template>
     <div class="mainFlex">
@@ -47,6 +51,7 @@ const addToCart = () => {
                 <div>
                     <input type="number" min="1" max="10" v-model="itemQuantity" />
                     <button @click="addToCart">Add to Cart</button>
+                    <button @click="quantityCheck">XXX</button>
                 </div>
             </section>
         </main>

@@ -1,5 +1,10 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useShopCartStore } from '@/stores/shopCart.js';
+import { storeToRefs } from 'pinia';
+
+const shopCartStore = useShopCartStore()
+const { cartQuantity } = storeToRefs(shopCartStore)
 
 const openCart = () => {
     console.log("Cart open works")
@@ -17,6 +22,7 @@ const openHamburger = () => {
             </RouterLink>
         </section>
         <section @click="openCart" class="cartImage" />
+        <p>{{ cartQuantity }}</p>
     </header>
 </template>
 <style lang="scss">
