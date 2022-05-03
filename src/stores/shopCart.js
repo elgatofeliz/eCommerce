@@ -1,21 +1,37 @@
 import { defineStore } from "pinia";
 import uuid4 from "uuid4";
 
+import { useShopDataStore } from '@/stores/shopData.js'
+
 export const useShopCartStore = defineStore('cartStore', {
 
     state: () => ({
-        cartData: [],
-        cartQuantity: 0
+        cartData: {},
+        cartItems: {},
+        cartQuantity: 0,
+        cartTotalPrice: 0
     }),
 
     actions: {
 
         quantity() {
-            let quantity = 0
-            this.cartData.products.forEach(item => {
-                quantity += item.qty
-            })
-            console.log(quantity)
+            if (this.cartData.products !== []) {
+                let quantity = 0
+                this.cartData.products.forEach(item => {
+                    quantity += item.qty
+                })
+                this.cartQuantity = quantity
+            }
+        },
+        totalPrice() {
+            if (this.cartItems) {
+                let price = 0
+                this.cartItems.value.forEach((item) => {
+                    let itemTotal = item.qty * item.price
+                    price += itemTotal
+                })
+                this.cartTotalPrice = price
+            }
         },
 
         loadCartInstance() {
@@ -27,6 +43,10 @@ export const useShopCartStore = defineStore('cartStore', {
 
             else {
                 this.cartData = JSON.parse(cs)
+                this.quantity()
+                console.log(this.cartQuantity)
+                this.updateCartItems()
+                console.log(this.cartItems)
             }
         },
 
@@ -71,15 +91,54 @@ export const useShopCartStore = defineStore('cartStore', {
             localStorage.setItem('cart', JSON.stringify(this.cartData))
 
             //update cartQuantity
-            let quantity = 0
-            this.cartData.products.forEach(item => {
-                quantity += item.qty
-            })
-            this.cartQuantity = quantity
+            this.quantity()
+            this.totalPrice()
         },
 
-        removeFromCart(id) {
-            this.cartData.products = this.cartData.products.filter((cartItem) => cartItem.id != id)
+        removeFromCart(item) {
+
+            const difference = item.cartQty - item.rmQty
+
+            if (difference === 0) {
+                this.cartData.products = this.cartData.products.filter((cartItem) => {
+                    return cartItem.id != item.id
+                })
+            }
+
+            if (difference > 0) {
+                this.cartData.products = this.cartData.products.map((cartItem) => {
+                    if (cartItem.id === item.id) {
+                        cartItem.qty = difference
+                        return cartItem
+                    } else {
+                        return cartItem
+                    }
+                })
+            }
+
+            localStorage.setItem('cart', JSON.stringify(this.cartData))
+            this.quantity()
+            this.updateCartItems()
+            this.totalPrice()
+        },
+
+        updateCartItems() {
+            const shopDataStore = useShopDataStore()
+            console.log("Data Store", shopDataStore.itemData)
+
+            let newArray = []
+
+            shopDataStore.itemData.forEach((item) => {
+                this.cartData.products.forEach((elt) => {
+                    if (item.id === elt.id) {
+                        item.qty = elt.qty
+                        newArray.push(item)
+                    }
+                })
+            })
+
+            this.cartItems.value = newArray
+            this.totalPrice()
         }
     }
 })

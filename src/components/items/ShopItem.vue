@@ -1,16 +1,20 @@
 <script setup>
 import { defineProps } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useShopCartStore } from '@/stores/shopCart.js';
+
+const shopCartStore = useShopCartStore()
 
 const props = defineProps({
     title: String,
     image: String,
-    price: Number,
+    price: String,
     id: Number,
 })
 
 const addToCart = () => {
-
+    const product = { name: props.title, id: props.id, qty: 1 }
+    shopCartStore.addToCart(product)
 }
 
 </script>

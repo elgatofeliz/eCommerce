@@ -2,9 +2,9 @@
 import { useRoute, RouterLink } from 'vue-router';
 import { useShopDataStore } from '../stores/shopData.js';
 import { useShopCartStore } from '../stores/shopCart.js';
+import { watch, ref } from 'vue';
 
 import CategoryAside from '../components/aside/CategoryAside.vue'
-import { watch, ref } from 'vue';
 
 const shopCartStore = useShopCartStore()
 const shopDataStore = useShopDataStore()
@@ -29,11 +29,6 @@ const addToCart = () => {
     const product = { name: itemData.value.title, id: itemData.value.id, qty: quantity }
     shopCartStore.addToCart(product)
 }
-
-const quantityCheck = () => {
-    shopCartStore.quantity()
-}
-
 </script>
 <template>
     <div class="mainFlex">
@@ -51,7 +46,6 @@ const quantityCheck = () => {
                 <div>
                     <input type="number" min="1" max="10" v-model="itemQuantity" />
                     <button @click="addToCart">Add to Cart</button>
-                    <button @click="quantityCheck">XXX</button>
                 </div>
             </section>
         </main>

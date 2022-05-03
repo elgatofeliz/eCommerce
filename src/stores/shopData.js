@@ -8,8 +8,26 @@ export const useShopDataStore = defineStore({
   }),
   actions: {
     setData(data) {
-      this.itemData = data
-      this.workData = data
+      const newData = data.map(elt => {
+        let index = elt.price.toString().indexOf(".")
+        if (index === -1) {
+          elt.price = elt.price.toString().concat(".00")
+          return elt
+        }
+        else {
+          let length = elt.price.toString().slice(index)
+          if (length.length < 3) {
+            elt.price = elt.price.toString().concat("0")
+            return elt
+          }
+          else {
+            elt.price = elt.price.toString()
+            return elt
+          }
+        }
+      })
+      this.itemData = newData
+      this.workData = newData
     },
     filterCategory(category) {
       if (category) {

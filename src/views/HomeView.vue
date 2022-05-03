@@ -1,18 +1,23 @@
 <script setup>
-import ShopItem from '@/components/ShopItem.vue'
+import ShopItem from '@/components/items/ShopItem.vue'
 import FilterAside from '../components/aside/FilterAside.vue'
+
+import { onMounted } from 'vue';
+
 import { useShopDataStore } from '@/stores/shopData.js'
+import { useShopCartStore } from "@/stores/shopCart";
+
 import { storeToRefs } from 'pinia'
 
 const shopDataStore = useShopDataStore()
-
-fetch('https://fakestoreapi.com/products')
-    .then(res => res.json())
-    .then(json => {
-        shopDataStore.setData(json)
-    })
+const shopCartStore = useShopCartStore()
 
 const { workData } = storeToRefs(shopDataStore)
+
+onMounted(() => {
+    shopCartStore.updateCartItems()
+})
+
 </script>
 <template>
     <div class="mainFlex">

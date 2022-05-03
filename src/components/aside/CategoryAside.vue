@@ -3,7 +3,7 @@ import { defineProps } from 'vue'
 import { storeToRefs } from 'pinia';
 import { useShopDataStore } from '@/stores/shopData.js'
 
-import ShopItem from '@/components/ShopItem.vue'
+import ShopItem from '@/components/items/ShopItem.vue'
 
 const shopDataStore = useShopDataStore()
 const { workData } = storeToRefs(shopDataStore)

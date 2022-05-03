@@ -21,8 +21,12 @@ const openHamburger = () => {
                 <h2>Crafty Commerce</h2>
             </RouterLink>
         </section>
-        <section @click="openCart" class="cartImage" />
-        <p>{{ cartQuantity }}</p>
+        <section class="mainFlex">
+            <RouterLink to="/cart">
+                <article @click="openCart" class="cartImage" />
+                <p>{{ cartQuantity }}</p>
+            </RouterLink>
+        </section>
     </header>
 </template>
 <style lang="scss">
